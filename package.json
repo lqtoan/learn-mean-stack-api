@@ -1,7 +1,7 @@
 {
   "name": "learn-mean-stack-api",
   "version": "1.0.0",
-  "description": "mongodb, expressjs, nodejs",
+  "description": "mongodb, express, node, NodeJs, ExpressJs, NodeJS, ExpressJS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
