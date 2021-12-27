@@ -1,7 +1,6 @@
 require('dotenv').config(); //
 const express = require('express');
 const mongoose = require('mongoose');
-const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.q2tua.mongodb.net/learn-mongodb?retryWrites=true&w=majority`;
 
 const authRouter = require('./routes/auth.route');
 const postRouter = require('./routes/post.route');
@@ -10,7 +9,9 @@ const app = express();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(`${URL}`);
+    await mongoose.connect(
+      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.q2tua.mongodb.net/learn-mongodb?retryWrites=true&w=majority`
+    );
     console.log('MongoDB connect');
   } catch (error) {
     console.log('err' + error.message);
