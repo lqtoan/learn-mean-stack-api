@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index",
-    "dev": "nodemon index.js"
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,9 @@
     "url": "https://github.com/lqtoan/learn-mean-stack-api/issues"
   },
   "homepage": "https://github.com/lqtoan/learn-mean-stack-api#readme",
+  "engines": {
+    "node": "17.x"
+  },
   "dependencies": {
     "argon2": "^0.28.3",
     "cors": "^2.8.5",
