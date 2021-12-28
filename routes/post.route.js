@@ -8,9 +8,9 @@ const Post = require('../models/post.model');
 // desc Get a new post
 // @access private
 // verifyToken
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
-    const posts = await Post.find({})
+    const posts = await Post.find({ user: req.userId })
       .populate('user', ['username'])
       .sort({ _id: -1 });
     res.json({ success: true, data: posts });
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 // desc Create a new post
 // @access private
 // verifyToken
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   const { title, description } = req.body;
 
   // Simple validation
