@@ -10,7 +10,7 @@ const Post = require('../models/post.model');
 // verifyToken
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find({ user: req.userId })
+    const posts = await Post.find({})
       .populate('user', ['username'])
       .sort({ _id: -1 });
     res.json({ success: true, data: posts });
