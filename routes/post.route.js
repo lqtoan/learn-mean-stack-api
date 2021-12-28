@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('../middleware/auth.middleware');
 
 const Post = require('../models/post.model');
 
@@ -7,11 +8,11 @@ const Post = require('../models/post.model');
 // desc Get a new post
 // @access private
 // verifyToken
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
-    const posts = await Post.find({ user: req.userId }).populate('user', [
-      'username',
-    ]);
+    const posts = await Post.find({ user: req.userId })
+      .populate('user', ['username'])
+      .sort({ _id: -1 });
     res.json({ success: true, data: posts });
   } catch (error) {
     console.error(error);
