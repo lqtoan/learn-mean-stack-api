@@ -7,12 +7,10 @@ const Post = require('../models/post.model');
 // @route GET /api/posts
 // desc Get a new post
 // @access private
-// verifyToken
+// verifyToken, user: req.userId
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find({ user: req.userId })
-      .populate('user', ['username'])
-      .sort({ _id: -1 });
+    const posts = await Post.find({}).sort({ _id: -1 });
     res.json({ success: true, data: posts });
   } catch (error) {
     console.error(error);
@@ -23,7 +21,7 @@ router.get('/', async (req, res) => {
 // desc Create a new post
 // @access private
 // verifyToken
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', async (req, res) => {
   const { title, description } = req.body;
 
   // Simple validation
@@ -36,7 +34,7 @@ router.post('/', verifyToken, async (req, res) => {
     const newPost = new Post({
       title,
       description,
-      user: req.userId,
+      // user: req.userId,
     });
 
     await newPost.save();
