@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     const newPost = new Post({
       title,
       description,
-      // user: req.userId,
+      user: req.username,
     });
 
     await newPost.save();
