@@ -7,10 +7,12 @@ const Post = require('../models/post.model');
 // @route GET /api/posts
 // desc Get a new post
 // @access private
-// verifyToken, user: req.userId
+// verifyToken,user: req.userId
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find({}).sort({ _id: -1 });
+    const posts = await Post.find({})
+      .populate('user', 'username')
+      .sort({ _id: -1 });
     res.json({ success: true, data: posts });
   } catch (error) {
     console.error(error);
@@ -21,7 +23,7 @@ router.get('/', async (req, res) => {
 // desc Create a new post
 // @access private
 // verifyToken
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   const { title, description } = req.body;
 
   // Simple validation
@@ -34,7 +36,7 @@ router.post('/', async (req, res) => {
     const newPost = new Post({
       title,
       description,
-      user: req.username,
+      user: req.userId,
     });
 
     await newPost.save();
@@ -42,6 +44,28 @@ router.post('/', async (req, res) => {
     res.json({ success: true, message: 'Success!', post: newPost });
   } catch (error) {
     console.log(error);
+  }
+});
+
+// @route DELETE api/posts
+// @desc Delete post
+// @access Private
+router.delete('/:id', async (req, res) => {
+  try {
+    const postDeleteCondition = { _id: req.params.id, user: req.userId };
+    const deletedPost = await Post.findOneAndDelete(postDeleteCondition);
+
+    // User not authorised or post not found
+    if (!deletedPost)
+      return res.status(401).json({
+        success: false,
+        message: 'Post not found or user not authorised',
+      });
+
+    res.json({ success: true, post: deletedPost });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
