@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
     res.json({ success: true, data: posts });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
@@ -44,13 +45,15 @@ router.post('/', verifyToken, async (req, res) => {
     res.json({ success: true, message: 'Success!', post: newPost });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
 // @route DELETE api/posts
 // @desc Delete post
 // @access Private
-router.delete('/:id', async (req, res) => {
+// verifyToken
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const postDeleteCondition = { _id: req.params.id, user: req.userId };
     const deletedPost = await Post.findOneAndDelete(postDeleteCondition);
