@@ -6,8 +6,8 @@ POST {{baseUrl}}/{{nameSource}}/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "toan",
-  "password": "toan"
+  "username": "tuesday",
+  "password": "tuesday"
 }
 ###
 
