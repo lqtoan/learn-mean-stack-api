@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
 
   // Simple validation
   if (!username || !password)
-    res
+    return res
       .status(400)
       .json({ success: false, message: 'Invalid username or password' });
 
@@ -59,14 +59,14 @@ router.post('/login', async (req, res) => {
     // Check for existing user
     const user = await User.findOne({ username });
     if (!user)
-      res
+      return res
         .status(400)
         .json({ success: false, message: 'Invalid username or password' });
 
     // User exists
     const passwordValid = await argon2.verify(user.password, password);
     if (!passwordValid)
-      res
+      return res
         .status(400)
         .json({ success: false, message: 'Invalid username or password' });
 
