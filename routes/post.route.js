@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 // @access private
 // verifyToken
 router.post('/', verifyToken, async (req, res) => {
-  const { title, description } = req.body;
+  const { title, description, createdAt } = req.body;
 
   // Simple validation
   if (!title)
@@ -37,6 +37,7 @@ router.post('/', verifyToken, async (req, res) => {
     const newPost = new Post({
       title,
       description,
+      createdAt,
       user: req.userId,
     });
 
