@@ -37,7 +37,7 @@ router.post('/', verifyToken, async (req, res) => {
     const newPost = new Post({
       title,
       description,
-      createdAt: new Date.now(),
+      createdAt,
       user: req.userId,
     });
 
