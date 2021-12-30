@@ -69,7 +69,9 @@ router.delete('/:id', verifyToken, async (req, res) => {
     res.json({ success: true, post: deletedPost });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+    return res
+      .status(500)
+      .json({ success: false, message: 'Internal server error' });
   }
 });
 
